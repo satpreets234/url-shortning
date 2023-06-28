@@ -16,7 +16,6 @@ export const fetchDataWithToken =async (slug) =>{
 }
 
 export const fetchDataWithoutToken =async (slug) =>{
-    const token=localStorage.getItem('token')
     return axios.get(`${baseUrl}${slug}`)
     .then(handleSuccess)
     .catch(handleError)

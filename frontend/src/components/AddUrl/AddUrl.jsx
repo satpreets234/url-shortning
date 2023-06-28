@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { validateFormFields } from '../../common-functions/common-functions';
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { postData } from '../../api-service/api-service';
 import { postNewUrl } from '../../redux/actions';
 
