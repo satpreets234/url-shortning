@@ -1,6 +1,7 @@
 const Joi=require('joi');
 const urlSchema = Joi.string()
-  .regex(/^(https?:\/\/)?((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3}))(:\d+)?(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(#\[-a-z\d_]*)?$/i);
+  .regex(/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$|^(?:(?:[a-zA-Z]{1,9}:(?:\/\/)?)(?:[-;:&=+$,\\w]+@)?[a-zA-Z0-9.-]+|(?:www.|[-;:&=+$,\\w]+@)[a-zA-Z0-9.-]+)((?:\/[+~%\/.\w-_]*)?\??(?:[-\\+=&;%@.\w_]*)#?(?:[\w]*))?/
+  );
 
       
 const urlSchemaValidation =(req,res,next) =>{
@@ -8,7 +9,7 @@ const urlSchemaValidation =(req,res,next) =>{
     const {error} =urlSchema.validate(req.body.givenUrl);
 
     if(error){
-        return res.status(400).send(error)
+        return res.status(400).send(error.message)
     }else{
        next();
     }
