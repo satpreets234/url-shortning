@@ -19,7 +19,7 @@ function ViewUrl() {
     console.log(urls);
     useEffect(()=>{
         fetchAllUrls();
-    })
+    },[])
   return (
     <div>
       <table className="table">

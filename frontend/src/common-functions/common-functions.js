@@ -6,7 +6,7 @@ const urlFieldvalidation =(value)=>{
             message:"Please enter non empty url !"
         }
     }
-    const re=/^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$|^(?:(?:[a-zA-Z]{1,9}:(?:\/\/)?)(?:[-;:&=+$,\\w]+@)?[a-zA-Z0-9.-]+|(?:www.|[-;:&=+$,\\w]+@)[a-zA-Z0-9.-]+)((?:\/[+~%\/.\w-_]*)?\??(?:[-\\+=&;%@.\w_]*)#?(?:[\w]*))?/
+    const re=/^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$/
      if(!re.test(value)){
         console.log(90);
         return {
