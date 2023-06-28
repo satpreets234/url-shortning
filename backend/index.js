@@ -2,6 +2,7 @@ const express =require('express');
 const { config }= require('dotenv');
 const  sequelize  =require('./connection/connection');
 const  cors = require("cors");
+const path=require('path');
 config();
 const port = process.env.PORT || 5100;
 
@@ -11,6 +12,7 @@ const indexRouter=require('./routers/index-router');
 app.use(cors());
 app.use(express.json());
 app.use('/api',indexRouter);
+app.use('/uploads',express.static(path.resolve(__dirname, 'uploads/qrImages')));
 
 // Connect to database
 sequelize.authenticate()

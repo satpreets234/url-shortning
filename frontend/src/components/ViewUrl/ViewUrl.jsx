@@ -3,6 +3,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import { fetchDataWithoutToken } from '../../api-service/api-service';
 import { getAllUrls } from '../../redux/actions';
+import qrCode from 'qrcode';
 function ViewUrl() {
     const dispatch = useDispatch();
     const urls=useSelector((state) => state.urlReducer.urls);
@@ -28,6 +29,7 @@ function ViewUrl() {
             <th>Original Url</th>
             <th>Short Url</th>
             <th>Click Count</th>
+            <th>Qr Image</th>
           </tr>
         </thead>
         <tbody>
@@ -35,9 +37,10 @@ function ViewUrl() {
             <tr key={idx}>
               <td>{url?.givenUrl}</td>
               <td>
-                <a href={`${url?.shortUrl}`} target='_blank' rel='norefererr'>{url?.shortUrl}</a>
+                <a href={`${url?.shortUrl}`} target='_blank' rel='noreferrer'>{url?.shortUrl}</a>
               </td>
               <td>{url?.clicks}</td>
+              <td><img width={50} src={`http://localhost:2900/uploads/${url?.qrImagelocation?.slice(17)}`}/></td>
             </tr>
           ))}
         </tbody>

@@ -1,6 +1,8 @@
 const urlModel=require('../models/url-model');
 const {Op}=require('sequelize');
 const shortId=require('shortid');
+const qrCode=require('qrcode');
+const fs=require('fs');
 
 const getAllUrls= async (req,res) =>{
     try {
@@ -16,6 +18,22 @@ const getAllUrls= async (req,res) =>{
     }
 }
 
+const generateQRCode = async (url) => {
+    try {
+      const qrCodeDataURL = await qrCode.toDataURL(url);
+      const timestamp = new Date().getTime(); // Get the current timestamp
+      const filename = `${timestamp}.png`; // Generate a unique filename using the timestamp
+      const qrCodeFilePath = `uploads/qrImages/${filename}`; // Define the path and filename for the QR code image
+      await fs.promises.writeFile(qrCodeFilePath, qrCodeDataURL.split(';base64,').pop(), { encoding: 'base64' });
+      console.log(qrCodeFilePath);
+      return qrCodeFilePath;
+    } catch (error) {
+      console.error('Error generating QR code:', error);
+      return null;
+    }
+  };
+  
+
 const postUrl= async (req,res) =>{
     try {
         const originalUrl=req.body.givenUrl;
@@ -25,9 +43,11 @@ const postUrl= async (req,res) =>{
         }else{
             let newShortId=shortId.generate()
             const baseUrl=process.env.BASE_URL;
+            let qrCodeUrl=await generateQRCode(originalUrl,originalUrl)
+            console.log(qrCodeUrl);
             const newUrlEntry=await urlModel.create({
                 givenUrl:originalUrl,shortUrl:`${baseUrl}${newShortId}`,
-                clicks:0
+                clicks:0,qrImagelocation:qrCodeUrl
             });
             if(newUrlEntry){
                return res.status(200).send(newUrlEntry)

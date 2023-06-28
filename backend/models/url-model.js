@@ -19,6 +19,10 @@ const urlModel= sequelize.define('Urls',{
         type:DataTypes.INTEGER,
         defaultValue:0,
         allownull:true
+    },
+    qrImagelocation:{
+        type:DataTypes.STRING,
+        allownull:false
     }
 
 });
