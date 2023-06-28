@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { validateFormFields } from '../../common-functions/common-functions';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { postData } from '../../api-service/api-service';
-import { postNewUrl } from '../../redux/actions';
+import { getAllUrls, postNewUrl } from '../../redux/actions';
+import BackDrop from '../../BackDrop/BackDrop';
 
 function AddUrl() {
     const [queryInput, setQueryInput] = useState({ url: '', errors: { url: '' } ,submit:false})
+    const loading=useSelector((state)=>state.urlReducer.loading);
     const dispatch = useDispatch();
     const handleOnErrors = (fieldName, fieldValue) => {
         setQueryInput((prevState)=>({
@@ -47,13 +49,13 @@ function AddUrl() {
                 toast.error('you may enter wrong values');
             } else {
                 console.log(15);
-                const postUrl = await postData('url', { givenUrl: queryInput.url });
-                dispatch(postNewUrl(postUrl));
-                setQueryInput({...queryInput,submit:!queryInput.submit})
-                toast.success('Short url generated successfully !')
+                // const postUrl = await postData('url', { givenUrl: queryInput.url });
+                // dispatch(postNewUrl(postUrl));
+                // setQueryInput({...queryInput,submit:!queryInput.submit})
+                // toast.success('Short url generated successfully !')
+                dispatch(postNewUrl(queryInput.url))
             }
         } catch (error) {
-            console.log(3);
             toast.error(error.message)
         }
 
@@ -78,6 +80,7 @@ function AddUrl() {
                             </button>
                         </div>
                     </form>
+                    <BackDrop open={loading}/>
                 </section>
             </main>
         </div>

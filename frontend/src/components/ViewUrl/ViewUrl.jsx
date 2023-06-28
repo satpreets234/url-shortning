@@ -9,9 +9,9 @@ function ViewUrl() {
 
     const fetchAllUrls = async()=>{
         try {
-            const allUrls=await fetchDataWithoutToken('url');
-            console.log(allUrls);
-            dispatch(getAllUrls(allUrls))
+            // const allUrls=await fetchDataWithoutToken('url');
+            // console.log(allUrls);
+            dispatch(getAllUrls())
         } catch (error) {
            toast.error(error.message) 
         }
@@ -35,7 +35,7 @@ function ViewUrl() {
             <tr key={idx}>
               <td>{url?.givenUrl}</td>
               <td>
-                <a href={`${url?.shortUrl}`}>{url?.shortUrl}</a>
+                <a href={`${url?.shortUrl}`} target='_blank' rel='norefererr'>{url?.shortUrl}</a>
               </td>
               <td>{url?.clicks}</td>
             </tr>
