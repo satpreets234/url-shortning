@@ -66,10 +66,15 @@ const redirecturl =async (req,res) =>{
     const {shortId}=req.params;
     const shortUrl=`${process.env.BASE_URL}${shortId}`
         const findUrl=await urlModel.findOne({where:{shortUrl}});
-        if(findUrl){
+        const createdAt = new Date(findUrl.createdAt); // Convert to JS Date object
+        if(findUrl && createdAt.getTime()+ 1000*60*60*24 >= Date.now()){
            const updateUrlAttribute=await findUrl.update({clicks:findUrl.clicks+1},{where:{shortUrl}});
             return res.redirect(findUrl.givenUrl);
-        }else{
+        }else if(findUrl && createdAt.getTime()+ 1000*60*60*24 < Date.now()){
+            const updateUrlAttribute=await findUrl.update({clicks:findUrl.clicks+1},{where:{shortUrl}});
+             return res.status(404).send('Link expired !')
+         }
+        else{
            return res.status(404).send('No Url found !')
         }
     } catch (error) {

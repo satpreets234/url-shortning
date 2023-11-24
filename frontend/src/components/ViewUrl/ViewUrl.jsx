@@ -10,8 +10,8 @@ function ViewUrl() {
 
     const fetchAllUrls = async()=>{
         try {
-            // const allUrls=await fetchDataWithoutToken('url');
-            // console.log(allUrls);
+            const allUrls=await fetchDataWithoutToken('url');
+            console.log(allUrls);
             dispatch(getAllUrls())
         } catch (error) {
            toast.error(error.message) 

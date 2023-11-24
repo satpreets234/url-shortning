@@ -1,5 +1,5 @@
 import { fetchDataWithoutToken, postData } from "../../api-service/api-service";
-import { GET_ALL_URLS, GET_ALL_URLS_FAILURE, GET_ALL_URLS_SUCCESS, POST_NEW_URL, POST_NEW_URL_FAILURE, POST_NEW_URL_SUCCESS, START_LOADING } from "./action-types";
+import { GET_ALL_URLS, GET_ALL_URLS_FAILURE, GET_ALL_URLS_SUCCESS, INCREASE_CLICK_COUNT, POST_NEW_URL, POST_NEW_URL_FAILURE, POST_NEW_URL_SUCCESS, START_LOADING } from "./action-types";
 
 export function startLoading() {
     return {
@@ -42,7 +42,12 @@ export function postNewUrlFailure(error) {
         payload: error
     }
 }
-
+export function increaseClickCount(id) {
+    return {
+        type: INCREASE_CLICK_COUNT,
+        payload: id
+    }
+}
 export function postNewUrl(url) {
     return async (dispatch) => {
         try {   dispatch(startLoading())

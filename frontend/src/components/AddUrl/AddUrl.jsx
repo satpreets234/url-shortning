@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postData } from '../../api-service/api-service';
 import { getAllUrls, postNewUrl } from '../../redux/actions';
 import BackDrop from '../../BackDrop/BackDrop';
+import { useDropzone } from 'react-dropzone';
 
 function AddUrl() {
     const [queryInput, setQueryInput] = useState({ url: '', errors: { url: '' } ,submit:false})
@@ -29,7 +30,14 @@ function AddUrl() {
             isUrlValid.status
         );
     }
-
+    const onDrop = (acceptedFiles) => {
+        // `acceptedFiles` is an array of files
+        // You can send these files to your backend.
+        console.log(acceptedFiles,88);
+      };
+    
+      const { getRootProps, getInputProps } = useDropzone({ onDrop });
+      
     const handleChange =(e)=>{
         if(queryInput.submit){
             setQueryInput({ ...queryInput, url: e.target.value })
@@ -79,6 +87,10 @@ function AddUrl() {
                                 Shorten!
                             </button>
                         </div>
+                        <button {...getRootProps()}>
+                                 <input {...getInputProps()} />
+                                 <p>Drag 'n' drop some files here, or click to select files</p>
+                        </button>
                     </form>
                     <BackDrop open={loading}/>
                 </section>

@@ -9,7 +9,10 @@ const urlModel= sequelize.define('Urls',{
     shortUrl:{
         type:DataTypes.STRING,
         allownull:false,
-        unique:true
+        unique:true,
+        validate:{
+            
+        }
     },
     date:{
         type:DataTypes.DATE,

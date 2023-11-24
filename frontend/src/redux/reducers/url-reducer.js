@@ -35,6 +35,17 @@ export default function urlReducer(state=initialState,action){
                 loading:false,
                 urls:[...state.urls,action.payload]
             }
+        case "INCREASE_CLICK_COUNT":
+            return {
+                ...state,
+                urls:state.urls.map((url,idx)=>{
+                    if(url.id===action.payload){
+                        return {...url,clicks:url.clicks+1}
+                    }else{
+                        return url
+                    }
+                })
+            }
         case "POST_NEW_URL_FAILURE":
             return {
                 ...state,

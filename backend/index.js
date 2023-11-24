@@ -13,7 +13,9 @@ app.use(cors());
 app.use(express.json());
 app.use('/api',indexRouter);
 app.use('/uploads',express.static(path.resolve(__dirname, 'uploads/qrImages')));
-
+require('./models/actor-model')
+require('./models/movie-model')
+require('./models/aavie-mxctor')
 // Connect to database
 sequelize.authenticate()
   .then(() => {
