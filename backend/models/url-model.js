@@ -1,38 +1,25 @@
-const {DataTypes}=require('sequelize');
-const sequelize =require('../connection/connection')
-const urlModel= sequelize.define('Urls',{
+const mongoose=require('mongoose');
+
+const urlSchema= new mongoose.Schema({
     givenUrl:{
-        type:DataTypes.STRING,
-        allownull:false,
-        unique:true
+        type:String,
+        unique:true,
+        required:true
     },
     shortUrl:{
-        type:DataTypes.STRING,
-        allownull:false,
         unique:true,
-        validate:{
-            
-        }
-    },
-    date:{
-        type:DataTypes.DATE,
-        defaultValue:Date.now()
+        type:String,
+        required:true
     },
     clicks:{
-        type:DataTypes.INTEGER,
-        defaultValue:0,
-        allownull:true
+        type:Number,
+        default:0,
+        required:true
     },
     qrImagelocation:{
-        type:DataTypes.STRING,
-        allownull:false
+        type:String,
+         required:true
     }
-
-});
-
-urlModel.sync().then((success)=>{
-    console.log(success);
-}).catch((error)=>{
-    console.log(error);
 })
-module.exports= urlModel;
+
+module.exports= mongoose.model('urls',urlSchema);
